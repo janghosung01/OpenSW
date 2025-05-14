@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>MOVIE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    /* 로고 스타일 */
+    #logo {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 20px;
+      cursor: pointer;
+      color: #333;
+    }
+    #logo:hover {
+      color: #007acc;
+    }
+    /* 검색창 & 버튼 */
+    #search-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    #search-bar input {
+      flex: 1;
+      padding: 10px;
+      font-size: 1em;
+    }
+    #search-bar button {
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    /* 영화 그리드 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .movie {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .movie img {
+      width: 100%;
+      height: auto;
+    }
+    .movie h4 {
+      margin: 10px 0 5px;
+      font-size: 1.1em;
+    }
+    .movie p {
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- 1) 클릭 가능한 로고 -->
+  <div id="logo" onclick="resetToLatest()">
+    MOVIE
+  </div>
+
+  <!-- 2) 검색창 -->
+  <div id="search-bar">
+    <input id="query" placeholder="영화 제목을 입력하세요" />
+    <button onclick="searchMovie()">검색</button>
+  </div>
+
+  <!-- 3) 섹션 제목 & 결과 그리드 -->
+  <h2 id="section-title">최신 영화</h2>
+  <div id="results" class="grid"></div>
+
+  <script>
+    // ======= 공통 함수 =======
+    async function fetchAndRender(url, titleText) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(res.status + " " + res.statusText);
+        const data = await res.json();
+
+        document.getElementById("section-title").textContent = titleText;
+        const container = document.getElementById("results");
+        container.innerHTML = "";
+
+        data.results.forEach(movie => {
+          const d = document.createElement("div");
+          d.className = "movie";
+
+          const img = document.createElement("img");
+          img.src = "https://image.tmdb.org/t/p/w200" + movie.poster_path;
+          img.alt = movie.title;
+
+          const h4 = document.createElement("h4");
+          h4.textContent = movie.title;
+
+          const p = document.createElement("p");
+          p.textContent = (movie.overview || "").slice(0, 100) + "...";
+
+          d.append(img, h4, p);
+          container.appendChild(d);
+        });
+      } catch (e) {
+        console.error("API 오류:", e);
+        alert("API 오류: " + e.message);
+      }
+    }
+
+    // ======= 검색 함수 =======
+    async function searchMovie() {
+      let raw = document.getElementById("query").value;
+      // 따옴표 제거 + 앞뒤 공백 제거
+      const query = raw.replace(/['"]/g, "").trim();
+      if (!query) {
+        alert("검색어를 입력하세요.");
+        return;
+      }
+      const encoded = encodeURIComponent(query);
+      await fetchAndRender(
+        `http://localhost:8000/search?query=${encoded}`,
+        "검색 결과"
+      );
+    }
+
+    // ======= 로고 클릭 시 최신 영화 뷰로 복귀 =======
+    function resetToLatest() {
+      document.getElementById("query").value = "";
+      fetchAndRender("http://localhost:8000/latest", "최신 영화");
+    }
+
+    // ======= 초기 로드 =======
+    fetchAndRender("http://localhost:8000/latest", "최신 영화");
+  </script>
+</body>
+</html>
