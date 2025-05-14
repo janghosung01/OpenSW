@@ -1,0 +1,19 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 버튼들을 수직으로 중앙 정렬 */
+  width: max-width;
+
+}
+
+.word{
+    font-size: 130%;
+}
+.Group {
+    display: flex;
+    flex-direction: row;  /* 수평 정렬 */
+     align-items: center; /* 버튼들을 수직으로 중앙 정렬 */
+     gap: 10px;;
+}
+
+
