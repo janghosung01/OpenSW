@@ -1,0 +1,86 @@
+.Center{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MainText{
+  flex-direction: row;
+  text-align: center;
+
+
+}
+
+
+.SearchName{
+    display: flex;
+    margin-top: 3%;
+    width:70%   ;
+    height:100px;
+    background-color: brown;
+    justify-content: space-between;
+    align-items: center ;
+    background: #303030;
+    border-radius: 10px;
+    border: 1px solid #535bf2;
+    box-shadow: 0 4px 10px -4px rgba(83, 91, 242, 0.5);  /* 테두리 밑에 그래디언트 그림자 효과 */
+}
+
+.inputName{
+    margin-left: 7%;
+    flex:7;
+}
+.inputBtn{
+    margin-right: 7%;
+    flex:3;
+}
+
+.cardBody{
+    margin-top: 5%;
+    width: 66%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 행 1대 1대 1*/
+    row-gap: 1%;
+    column-gap: 2%;
+    justify-content: center;
+}
+
+.Card{
+    background-color: #303030;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #535bf2;
+    box-shadow: 0 4px 10px -4px rgba(83, 91, 242, 0.5);
+}
+
+.C_title{
+
+flex: 0 0 6%;
+padding-left: 5%;
+}
+
+.C_img{
+flex: 0 0 60%;
+height: 60%;
+width: 90%;
+object-fit: cover; /* 잘리는 방식 설정 (옵션) */
+padding-left: 5%;
+}
+
+.C_date{
+flex: 0 0 4%;
+padding-left: 5%;
+margin: 0;
+}
+.C_btn{
+    display: block;
+    flex: 0 0 10%;
+    margin-bottom: 5%;
+    width: 90%;
+    margin-left: 5%;
+}
