@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Header from './Components/Header'
+import MovieList from './Components/MovieList/MovieList'
 function App() {
   const [isLogin,SetisLogin]=useState(false);
   function toHeaderLogin(){
@@ -9,10 +10,9 @@ function App() {
   return (
     <>
       <Header LoginInfo={isLogin} toggleLogin={toHeaderLogin}/>
-      <hr />
+      <MovieList/>
     </>
   )
-
 }
 
 export default App
