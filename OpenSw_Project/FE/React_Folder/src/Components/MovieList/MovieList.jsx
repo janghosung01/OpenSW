@@ -8,7 +8,7 @@ function MovieList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/latest`);
+        const res = await axios.get(`https://movie-api-test-latest.onrender.com/latest`);
 
         setMovies(res.data.results);
       } catch (err) {
@@ -29,7 +29,7 @@ function MovieList() {
     } else {
       const fetchSearchMovie = async (searchVal) => {
         try {
-          const res = await axios.get(`http://localhost:8000/search`, {
+          const res = await axios.get(`https://movie-api-test-latest.onrender.com/search`, {
             params: {
               query: searchVal,
             },
@@ -80,7 +80,7 @@ function MovieList() {
 
             <div className="Card" key={idx}>
               <p className="C_title">
-                {idx + 1}.{MovieTitle}
+                {MovieTitle}
               </p>
               <img className="C_img" src={MovieimgURL} alt="이미지 없음" />
               <p className="C_date">개봉일 : {MovieReleaseDate}</p>
