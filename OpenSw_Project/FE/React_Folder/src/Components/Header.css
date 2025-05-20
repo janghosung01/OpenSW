@@ -1,27 +1,121 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* 버튼들을 수직으로 중앙 정렬 */
-  width: max-width;
-  padding-left: 1%;
-  padding-right: 1%;
-  background: #303030;
-  border-bottom: 1px solid #535bf2;
-  box-shadow: 0 4px 10px -4px rgba(83, 91, 242, 0.5);  /* 테두리 밑에 그래디언트 그림자 효과 */
-}
-a:hover {
-  color: #535bf2;  /* 텍스트 색상 (호버 시 파란색) */
-  text-shadow: 0 4px 10px rgba(83, 91, 242, 0.5);  /* 텍스트 아래에 그림자 추가 */
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(20, 20, 20, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
 }
 
-.word{
-    font-size: 130%;
+.headerContainer h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
+
 .Group {
-    display: flex;
-    flex-direction: row;  /* 수평 정렬 */
-     align-items: center; /* 버튼들을 수직으로 중앙 정렬 */
-     gap: 10px;;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+}
 
+.word {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.word::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.word:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+.loginBtn, .logoutBtn, .signUpBtn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.loginBtn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.loginBtn:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+}
+
+.logoutBtn {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+.logoutBtn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.signUpBtn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  border: 1px solid transparent;
+}
+
+.signUpBtn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .headerContainer {
+    padding: 1rem;
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .Group {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  
+  .word {
+    font-size: 0.9rem;
+  }
+  
+  .loginBtn, .logoutBtn, .signUpBtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
