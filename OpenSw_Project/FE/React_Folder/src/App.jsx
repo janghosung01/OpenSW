@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -34,12 +34,14 @@ function App() {
   function check(){
     console.log(userData);
   }
+
+  const location = useLocation();
   return (
     <>
       <Header LoginInfo={isLogin} onLogout={handleLogout} userData={userData.name}/>
       <button onClick={check}>check user</button>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home key={location.key} />} />
         <Route path='/login' element={<Login onLoginSuccess={handleLoginSuccess} />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/mypage' element={
