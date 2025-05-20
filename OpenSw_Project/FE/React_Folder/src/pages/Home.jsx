@@ -1,9 +1,11 @@
 import MovieList from '../Components/MovieList/MovieList'
 
 function Home() {
+
+  
   return (
     <div>
-        <MovieList/>
+        <MovieList />
     </div>
   );
 }
