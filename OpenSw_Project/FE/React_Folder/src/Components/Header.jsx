@@ -1,29 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./Header.css";
 function Header(props) {
   const isLogin = props.LoginInfo;
-  const toggleLogin = props.toggleLogin;
-  const name = "장호성";
+  const onLogout = props.onLogout;
+  const name = props.userData;
+
   return (
     <div className="headerContainer">
       <h2>영화 리뷰 사이트 </h2>
 
       <div className="Group right">
-        <Link className="right word" to="/">홈</Link>
-        <div className="right word">{name} 님</div>
-        <Link className="right word" to="/mypage">마이페이지</Link>
-
-          {isLogin ? (
-            <button className="loginBtn" onClick={toggleLogin}>
-              Login
-            </button>
-          ) : (
-            <button className="logoutBtn" onClick={toggleLogin}>
-              Logout
-            </button>
-          )}
-          <button className="signUpBtn"> 회원 가입</button>
+        <Link className="right word" to="/">
+          홈
+        </Link>
+        <div className="right "><p className="Name">{name}</p>님</div>
+        <Link className="right word" to="/mypage">
+          마이페이지
+        </Link>
+        {isLogin ? (
+          <button className="logoutBtn" onClick={onLogout}>
+            로그아웃
+          </button>
+        ) : (
+          <Link className="loginBtn" to="/login">
+            로그인
+          </Link>
+        )}
+        <Link className="signUpBtn" to="/signup">
+          회원 가입
+        </Link>
       </div>
     </div>
   );
