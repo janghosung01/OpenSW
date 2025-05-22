@@ -36,7 +36,11 @@
   padding: 0.5rem;
   position: relative;
 }
-
+.Name{
+   font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline; 
+}
 .word::after {
   content: '';
   position: absolute;

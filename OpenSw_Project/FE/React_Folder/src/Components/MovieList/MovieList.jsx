@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./MovieList.css";
-function MovieList() {
+function MovieList(props) {
   const [movies, setMovies] = useState([]);
   const [searchVal, SetSearchVal] = useState("");
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://movie-api-test-latest.onrender.com/latest`);
-
+        const res = await axios.get(
+          `https://movie-api-test-latest.onrender.com/latest`
+        );
         setMovies(res.data.results);
+        console.log(res.data);
       } catch (err) {
         console.error("API 요청 실패:", err);
       }
@@ -29,11 +32,14 @@ function MovieList() {
     } else {
       const fetchSearchMovie = async (searchVal) => {
         try {
-          const res = await axios.get(`https://movie-api-test-latest.onrender.com/search`, {
-            params: {
-              query: searchVal,
-            },
-          });
+          const res = await axios.get(
+            `https://movie-api-test-latest.onrender.com/search`,
+            {
+              params: {
+                query: searchVal,
+              },
+            }
+          );
           console.log(res.data.results); // 영화 결과 출력
           setMovies(res.data.results);
         } catch (err) {
@@ -67,30 +73,26 @@ function MovieList() {
         </div>
       </div>
 
-       <div className="Center">
-          <div className="cardBody">
-      {movies.map((item, idx) => {
-        //console.log(item);
-        const Movieid = item.id;
-        const MovieOverview = item.overview;
-        const MovieReleaseDate = item.release_date;
-        const MovieTitle = item.title;
-        const MovieimgURL = `https://image.tmdb.org/t/p/w200${item.poster_path}`;
-        return (
-
-            <div className="Card" key={idx}>
-              <p className="C_title">
-                {MovieTitle}
-              </p>
-              <img className="C_img" src={MovieimgURL} alt="이미지 없음" />
-              <p className="C_date">개봉일 : {MovieReleaseDate}</p>
-              <button className="C_btn">리뷰 보기&쓰기</button>
-            </div>
-
-        );
-        
-      })}</div>
-                </div>
+      <div className="Center">
+        <div className="cardBody">
+          {movies.map((item, idx) => {
+            //console.log(item);
+            const Movieid = item.id;
+            const MovieOverview = item.overview;
+            const MovieReleaseDate = item.release_date;
+            const MovieTitle = item.title;
+            const MovieimgURL = `https://image.tmdb.org/t/p/w200${item.poster_path}`;
+            return (
+              <div className="Card" key={idx}>
+                <p className="C_title">{MovieTitle}</p>
+                <img className="C_img" src={MovieimgURL} alt="이미지 없음" />
+                <p className="C_date">개봉일 : {MovieReleaseDate}</p>
+                <button className="C_btn">리뷰 보기&쓰기</button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
