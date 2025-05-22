@@ -1,10 +1,14 @@
 import { useState } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+
 import './App.css'
+
+import UserContext from './Context/UserContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import MyPage from './pages/MyPage'
+import MovieDetail from './pages/MovieDetail'
 import Header from './Components/Header'
 import ProtectedRoute from './Components/ProtectedRoute'
 
@@ -40,15 +44,20 @@ function App() {
     <>
       <Header LoginInfo={isLogin} onLogout={handleLogout} userData={userData.name}/>
       <button onClick={check}>check user</button>
+      
+      <UserContext.Provider value={{ isLogin, userData }}>
+      {/* 이제 하위 컴포넌트 어디서든 UserContext 쓸 수 있음 */}
       <Routes>
         <Route path='/' element={<Home key={location.key} />} />
         <Route path='/login' element={<Login onLoginSuccess={handleLoginSuccess} />} />
         <Route path='/signup' element={<SignUp />} />
+        <Route path="/movie/:movieId" element={<MovieDetail />} />
         <Route path='/mypage' element={
           <ProtectedRoute isLogin={isLogin}> <MyPage /> </ProtectedRoute>
         } 
         />
       </Routes>
+      </UserContext.Provider>
     </>
   )
 }

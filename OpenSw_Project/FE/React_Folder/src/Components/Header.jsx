@@ -14,29 +14,30 @@ function Header(props) {
         <Link className="right word" to="/">
           홈
         </Link>
-        
+
         {isLogin ? (
           <>
-            <div className="right "><p className="Name">{name}</p>님</div>
-            <Link className="right word" to="/mypage">
-              마이페이지
-            </Link>
+                  <div className="right ">
+          <p className="Name">{name}</p>님
+        </div>
+        <Link className="right word" to="/mypage">
+          마이페이지
+        </Link>
             <button className="logoutBtn" onClick={onLogout}>
               로그아웃
             </button>
           </>
         ) : (
-          <>          
+          <>
             <Link className="loginBtn" to="/login">
               로그인
-            </Link>
-
-            <Link className="signUpBtn" to="/signup">
-              회원 가입
             </Link>
           </>
         )}
         
+            <Link className="signUpBtn" to="/signup">
+              회원 가입
+            </Link>
       </div>
     </div>
   );

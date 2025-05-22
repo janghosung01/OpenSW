@@ -66,7 +66,7 @@ function Login({ onLoginSuccess }) {
 
   return (
     <form id="mentee" onSubmit={handleSubmit}>
-      <h1>mentee</h1>
+      <h1>Login</h1>
       <label htmlFor="loginId">Login ID</label>
       <input
         id="loginId"
@@ -84,7 +84,7 @@ function Login({ onLoginSuccess }) {
         value={formData.password}
         onChange={handleChange}
       />
-      <button type="submit">제출하기</button>
+      <button type="submit">로그인</button>
       <button type="button" onClick={() => navigate(-1)}>
         취소
       </button>

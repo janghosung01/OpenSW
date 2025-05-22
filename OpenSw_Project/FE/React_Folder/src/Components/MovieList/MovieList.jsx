@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import "./MovieList.css";
 function MovieList(props) {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [searchVal, SetSearchVal] = useState("");
 
-
+  const goToDetail = (movieId) => {
+    navigate(`/movie/${movieId}`);
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,9 +90,16 @@ function MovieList(props) {
             return (
               <div className="Card" key={idx}>
                 <p className="C_title">{MovieTitle}</p>
-                <img className="C_img" src={MovieimgURL} alt="이미지 없음" />
+
+                <div className="img-container">
+                  <img className="C_img" src={MovieimgURL} alt="이미지 없음" />
+                  <div className="overlay">
+                    <p className="overview-text">{MovieOverview}</p>
+                  </div>
+                </div>
+
                 <p className="C_date">개봉일 : {MovieReleaseDate}</p>
-                <button className="C_btn">리뷰 보기&쓰기</button>
+                <button className="C_btn" key={Movieid} onClick={() => goToDetail(Movieid)}>리뷰 보기&쓰기</button>
               </div>
             );
           })}
