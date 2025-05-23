@@ -34,12 +34,14 @@ function Header(props) {
             <Link className="loginBtn" to="/login">
               로그인
             </Link>
-          </>
-        )}
-        
+
             <Link className="signUpBtn" to="/signup">
               회원 가입
             </Link>
+          </>
+        )}
+        
+            
       </div>
     </div>
   );
