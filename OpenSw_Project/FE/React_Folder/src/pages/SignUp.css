@@ -1,83 +1,116 @@
+/* SignUp Page Styling */
 .signup-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: calc(100vh - 80px);
   padding: 2rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-              url('https://source.unsplash.com/random/1920x1080/?movies') no-repeat center center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/placeholder.svg?height=1080&width=1920")
+    no-repeat center center;
+  background-size: cover;
 }
 
 .signup-form {
   background-color: rgba(0, 0, 0, 0.75);
-  padding: 3rem 2rem;
+  padding: 3rem 4rem;
   border-radius: 4px;
   width: 100%;
   max-width: 450px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.signup-form h2 {
-  color: white;
-  margin-bottom: 2rem;
+.signup-form h1 {
+  color: var(--text-color);
   font-size: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
+.signup-form label {
   display: block;
+  color: var(--text-color);
   margin-bottom: 0.5rem;
-  color: #ccc;
+  font-size: 0.9rem;
 }
 
-.form-group input {
+.signup-form input[type="text"],
+.signup-form input[type="password"] {
   width: 100%;
   padding: 1rem;
+  margin-bottom: 1.5rem;
   background-color: #333;
   border: none;
   border-radius: 4px;
-  color: white;
+  color: var(--text-color);
   font-size: 1rem;
 }
 
-.form-group input:focus {
+.signup-form input[type="text"]:focus,
+.signup-form input[type="password"]:focus {
   outline: none;
   background-color: #454545;
 }
 
-.signup-btn {
+.signup-form .gender-container {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.signup-form .gender-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signup-form input[type="radio"] {
+  accent-color: var(--primary-color);
+  width: 1rem;
+  height: 1rem;
+}
+
+.signup-form button {
   width: 100%;
   padding: 1rem;
-  background-color: var(--primary-color);
-  color: white;
+  margin-bottom: 1rem;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 1rem;
 }
 
-.signup-btn:hover {
+.signup-form button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.signup-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }
 
-.signup-links {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #ccc;
+.signup-form button[type="button"] {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
 }
 
-.signup-links a {
-  color: white;
+.signup-form button[type="button"]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.signup-form .login-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: #737373;
+}
+
+.signup-form .login-link a {
+  color: var(--text-color);
   text-decoration: none;
 }
 
-.signup-links a:hover {
+.signup-form .login-link a:hover {
   text-decoration: underline;
 }

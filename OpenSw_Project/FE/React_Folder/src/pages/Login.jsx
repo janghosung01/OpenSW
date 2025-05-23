@@ -1,34 +1,36 @@
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import React, { useState } from "react";
+"use client"
+
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { useState } from "react"
+import "./login.css"
+
 function Login({ onLoginSuccess }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     loginId: "",
     password: "",
-  });
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const { loginId, password } = formData;
+    const { loginId, password } = formData
 
     if (loginId.trim() === "" || password.trim() === "") {
-      alert("모든정보 입력바람");
-      return;
+      alert("모든정보 입력바람")
+      return
     }
 
-    console.log(loginId);
-    console.log(password);
     try {
       const response = await axios.post(
         `https://movie-api-test-latest.onrender.com/login`,
@@ -40,56 +42,63 @@ function Login({ onLoginSuccess }) {
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
-      //console.log(response.data);
-      alert("로그인 성공!");
+        },
+      )
+      alert("로그인 성공!")
 
-      // response.data 에서 사용자 정보 구조에 맞게 꺼내기
-      // 예: { loginId, keyId, name, gender } 포함되어 있다고 가정
       const user = {
         loginId: response.data.userId,
         keyId: response.data.id,
         name: response.data.name,
         gender: response.data.gender,
-      };
-      // 로그인 성공 시 (예시)
-      onLoginSuccess(user);
-      navigate("/"); // 로그인 후 홈으로 이동
-
-      navigate("/"); // 회원가입 성공 후 홈(또는 원하는 경로)으로 이동
+      }
+      onLoginSuccess(user)
+      navigate("/")
     } catch (error) {
-      console.error(error);
-      alert(`로그인 실패! ${error.response.data.detail}`);
+      console.error(error)
+      alert(`로그인 실패! ${error.response.data.detail}`)
     }
-  };
+  }
 
   return (
-    <form id="mentee" onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <label htmlFor="loginId">Login ID</label>
-      <input
-        id="loginId"
-        name="loginId"
-        type="text"
-        value={formData.loginId}
-        onChange={handleChange}
-      />
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h1>로그인</h1>
+        <div>
+          <label htmlFor="loginId">아이디</label>
+          <input
+            id="loginId"
+            name="loginId"
+            type="text"
+            value={formData.loginId}
+            onChange={handleChange}
+            placeholder="아이디를 입력하세요"
+          />
+        </div>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <button type="submit">로그인</button>
-      <button type="button" onClick={() => navigate(-1)}>
-        취소
-      </button>
-    </form>
-  );
+        <div>
+          <label htmlFor="password">비밀번호</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+
+        <button type="submit">로그인</button>
+        <button type="button" onClick={() => navigate(-1)}>
+          취소
+        </button>
+
+        <div className="signup-link">
+          계정이 없으신가요? <a href="/signup">회원가입</a>
+        </div>
+      </form>
+    </div>
+  )
 }
 
-export default Login;
+export default Login

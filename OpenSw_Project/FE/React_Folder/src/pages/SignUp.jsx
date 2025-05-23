@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+"use client"
+
+import { useState } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import "./signup.css"
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -8,119 +11,130 @@ function SignUp() {
     password: "",
     name: "",
     gender: "",
-  });
+  })
 
-  const navigate = useNavigate(); // useNavigate 훅 호출
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const { loginId, password, name, gender } = formData;
+    const { loginId, password, name, gender } = formData
 
-    if (
-      loginId.trim() === "" ||
-      password.trim() === "" ||
-      name.trim() === "" ||
-      gender.trim() === ""
-    ) {
-      alert("모든정보 입력바람");
-      return;
+    if (loginId.trim() === "" || password.trim() === "" || name.trim() === "" || gender.trim() === "") {
+      alert("모든정보 입력바람")
+      return
     }
 
-    console.log(loginId);
-    console.log(password);
-    console.log(name);
-    console.log(gender);
     try {
       const response = await axios.post(
         `https://movie-api-test-latest.onrender.com/register`,
         {
-          name:name,
+          name: name,
           userId: loginId,
-          password:password,
-          gender:gender,
+          password: password,
+          gender: gender,
         },
         {
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
-      alert("회원가입 성공!");
-      navigate("/"); // 회원가입 성공 후 홈(또는 원하는 경로)으로 이동
+        },
+      )
+      alert("회원가입 성공!")
+      navigate("/")
     } catch (error) {
-        console.error(error.response.data.detail  );
-      alert(`회원가입 실패! ${error.response.data.detail}`);
-      navigate("/"); // 회원가입 성공 후 홈(또는 원하는 경로)으로 이동
+      console.error(error.response.data.detail)
+      alert(`회원가입 실패! ${error.response.data.detail}`)
+      navigate("/")
     }
-  };
+  }
 
   return (
-    <form id="mentee" onSubmit={handleSubmit}>
-      <h1>mentee</h1>
-      <label htmlFor="loginId">Login ID</label>
-      <input
-        id="loginId"
-        name="loginId"
-        type="text"
-        value={formData.loginId}
-        onChange={handleChange}
-      />
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h1>회원가입</h1>
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+        <div>
+          <label htmlFor="loginId">아이디</label>
+          <input
+            id="loginId"
+            name="loginId"
+            type="text"
+            value={formData.loginId}
+            onChange={handleChange}
+            placeholder="사용할 아이디를 입력하세요"
+          />
+        </div>
 
-      <label htmlFor="name">name</label>
-      <input
-        id="name"
-        name="name"
-        type="text"
-        value={formData.name}
-        onChange={handleChange}
-      />
+        <div>
+          <label htmlFor="password">비밀번호</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
 
-      <div>
-        <input
-          type="radio"
-          id="male"
-          name="gender"
-          value="MALE"
-          checked={formData.gender === "MALE"}
-          onChange={handleChange}
-        />
-        <label htmlFor="male">Male</label>
+        <div>
+          <label htmlFor="name">이름</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="이름을 입력하세요"
+          />
+        </div>
 
-        <input
-          type="radio"
-          id="female"
-          name="gender"
-          value="FEMALE"
-          checked={formData.gender === "FEMALE"}
-          onChange={handleChange}
-        />
-        <label htmlFor="female">Female</label>
-      </div>
+        <div className="gender-container">
+          <div className="gender-option">
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="MALE"
+              checked={formData.gender === "MALE"}
+              onChange={handleChange}
+            />
+            <label htmlFor="male">남성</label>
+          </div>
 
-      <button type="submit">제출하기</button>
-      <button type="button" onClick={() => navigate(-1)}>
-        취소
-      </button>
-    </form>
-  );
+          <div className="gender-option">
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="FEMALE"
+              checked={formData.gender === "FEMALE"}
+              onChange={handleChange}
+            />
+            <label htmlFor="female">여성</label>
+          </div>
+        </div>
+
+        <button type="submit">회원가입</button>
+        <button type="button" onClick={() => navigate(-1)}>
+          취소
+        </button>
+
+        <div className="login-link">
+          이미 계정이 있으신가요? <a href="/login">로그인</a>
+        </div>
+      </form>
+    </div>
+  )
 }
 
-export default SignUp;
+export default SignUp
