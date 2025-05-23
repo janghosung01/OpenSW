@@ -1,30 +1,39 @@
-"use client"
+"use client";
 
-import { useContext, useEffect, useState } from "react"
-import { useParams, Link } from "react-router-dom"
-import UserContext from "../Context/UserContext"
-import axios from "axios"
-import "./movie-detail.css"
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import UserContext from "../Context/UserContext";
+import axios from "axios";
+import "./movie-detail.css";
 
 function MovieDetail() {
-  const { movieId } = useParams()
-  const { isLogin, userData } = useContext(UserContext)
+  const { movieId } = useParams();
+  const { isLogin, userData } = useContext(UserContext);
 
-  const [movieDetail, setMovieDetail] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [movieDetail, setMovieDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [reviews, setReviews] = useState([])
-  const [newReview, setNewReview] = useState("")
+  const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState("");
 
   const handleChangeReview = (e) => {
-    setNewReview(e.target.value)
-  }
+    setNewReview(e.target.value);
+  };
+
+
+
+
+/* 여기 143줄 handleDeleteReview 구현 내아이디와 동일 리뷰 삭제 기능*/
+const handleDeleteReview=()=>{
+  alert("api 만들면 연결")
+}
+
 
   const reviewRegister = async () => {
     if (!newReview.trim()) {
-      alert("리뷰 내용을 입력해주세요.")
-      return
+      alert("리뷰 내용을 입력해주세요.");
+      return;
     }
 
     try {
@@ -33,38 +42,44 @@ function MovieDetail() {
         {
           content: newReview,
           rating: 5,
-        },
-      )
+        }
+      );
 
-      const reviewResponse = await axios.get(`https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews`)
-      setReviews(reviewResponse.data)
-      setNewReview("")
-      alert("리뷰가 등록되었습니다.")
+      const reviewResponse = await axios.get(
+        `https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews`
+      );
+      setReviews(reviewResponse.data);
+      setNewReview("");
+      alert("리뷰가 등록되었습니다.");
     } catch (err) {
-      console.error(err)
-      alert("리뷰 등록에 실패했습니다.")
+      console.error(err);
+      alert("리뷰 등록에 실패했습니다.");
     }
-  }
+  };
 
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        setLoading(true)
-        const response = await axios.get(`https://movie-api-test-latest.onrender.com/movies/${movieId}`)
-        setMovieDetail(response.data)
+        setLoading(true);
+        const response = await axios.get(
+          `https://movie-api-test-latest.onrender.com/movies/${movieId}`
+        );
+        setMovieDetail(response.data);
 
-        const reviewResponse = await axios.get(`https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews`)
-        setReviews(reviewResponse.data)
-        setLoading(false)
+        const reviewResponse = await axios.get(
+          `https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews`
+        );
+        setReviews(reviewResponse.data);
+        setLoading(false);
       } catch (err) {
-        setError("영화 정보를 불러오는데 실패했습니다.")
-        setLoading(false)
-        console.error(err)
+        setError("영화 정보를 불러오는데 실패했습니다.");
+        setLoading(false);
+        console.error(err);
       }
-    }
+    };
 
-    fetchMovieDetail()
-  }, [movieId])
+    fetchMovieDetail();
+  }, [movieId]);
 
   if (loading)
     return (
@@ -73,7 +88,7 @@ function MovieDetail() {
           <p>로딩중...</p>
         </div>
       </div>
-    )
+    );
 
   if (error)
     return (
@@ -82,7 +97,7 @@ function MovieDetail() {
           <p>{error}</p>
         </div>
       </div>
-    )
+    );
 
   return (
     <div className="movie-detail-container">
@@ -105,7 +120,8 @@ function MovieDetail() {
               <div className="movie-meta">
                 <p>개봉일: {movieDetail.release_date}</p>
                 <p>
-                  평점: <span className="rating">{movieDetail.vote_average}</span>
+                  평점:{" "}
+                  <span className="rating">{movieDetail.vote_average}</span>
                 </p>
               </div>
             </div>
@@ -118,11 +134,23 @@ function MovieDetail() {
               reviews.map((item) => (
                 <div className="review-item" key={item.id}>
                   <div className="review-header">
-                    <p>작성자: {item.user_id}</p>
+                    <p>작성자 Id: {item.user_id}</p>
                     <p className="review-rating">평점: {item.rating}</p>
                   </div>
                   <p className="review-content">{item.content}</p>
-                  <p className="review-date">작성일: {new Date(item.created_at).toLocaleString()}</p>
+                  <p className="review-date">
+                    작성일: {new Date(item.created_at).toLocaleString()}
+                  </p>
+
+                  {/* 작성자와 로그인 유저가 같을 때만 삭제 버튼 노출 */}
+                  {item.user_id === userData.loginId && (
+                    <button
+                      className="delete-review-button"
+                      onClick={() => handleDeleteReview(item.id)}
+                    >
+                      삭제
+                    </button>
+                  )}
                 </div>
               ))
             ) : (
@@ -152,7 +180,7 @@ function MovieDetail() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default MovieDetail
+export default MovieDetail;
