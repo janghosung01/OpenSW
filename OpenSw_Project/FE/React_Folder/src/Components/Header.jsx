@@ -8,8 +8,10 @@ function Header(props) {
 
   return (
     <div className="headerContainer">
-      <h2>영화 리뷰 사이트 </h2>
-
+      
+      <Link className="Mainpage" to="/">
+          영화 리뷰 사이트
+        </Link>
       <div className="Group right">
         <Link className="right word" to="/">
           홈
