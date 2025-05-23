@@ -25,8 +25,31 @@ function MovieDetail() {
 
 
 /* 여기 143줄 handleDeleteReview 구현 내아이디와 동일 리뷰 삭제 기능*/
-const handleDeleteReview=()=>{
-  alert("api 만들면 연결")
+const handleDeleteReview= async (reviewId)=>{
+  const confirmDelete = window.confirm("정말 이 리뷰를 삭제하시겠습니까?");
+  if (!confirmDelete) return;
+
+  try {
+    await axios.delete(
+      `https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews/${reviewId}`,
+      {
+        params: {
+          user_id: userData.loginId
+        }
+      }
+    );
+
+    // 삭제 후 리뷰 목록 다시 불러오기
+    const reviewResponse = await axios.get(
+      `https://movie-api-test-latest.onrender.com/movies/${movieId}/reviews`
+    );
+    setReviews(reviewResponse.data);
+
+    alert("리뷰가 삭제되었습니다.");
+  } catch (err) {
+    console.error("리뷰 삭제 중 에러 발생:", err);
+    alert("리뷰 삭제에 실패했습니다.");
+  }
 }
 
 
