@@ -125,6 +125,21 @@
   text-align: right;
 }
 
+.review-button-delete {
+  align-self: flex-end; /* flex column일 때 오른쪽 정렬 */
+  margin-top: 0.5rem;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.review-button-delete:hover {
+  background-color: #d9363e;
+}
+
 .no-reviews {
   text-align: center;
   padding: 3rem;
